@@ -1,0 +1,154 @@
+body {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Helvetica, sans-serif;
+}
+strong, em, b, i, h1, h2, h3, h4 {
+    /* Lucida sans looks better for bolded text than "Lucida sans unicode" */
+    font-family: "Lucida Sans", "Lucida Sans Unicode", "Lucida Grande", Helvetica, sans-serif;
+}
+p {
+    margin-left: 40px;
+    margin-right: 40px;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 14px;
+    padding:0;
+    margin-top:0.2em;
+    margin-bottom:0.2em;
+}
+br.lb {height:0px}
+/* styles for texts from MVD-GUI */
+div.poem { margin-left: 1cm; font-size: 14px }
+div#scrolling { width : 400px; height : 200px; overflow : auto; }
+li.version { margin-left: 12px; text-indent: -12px }
+li.group { margin-left: 12px; text-indent: -12px }
+p.description { text-align: center }
+p.groupPrompt { padding-bottom: 20px; padding-top: 100px }
+p.stageitalic {font-size: 14px; font-style: italic }
+p.stage {font-size: 14px }
+p.versionHeader {font-size: 14px; font-weight: bold; padding-bottom: 10px; padding-top: 50px; text-align: center }
+p.sp {font-size: 14px}
+p.cast {font-size: 14px}
+p.lg {font-size: 14px}
+span.sigla{font-style:italic}
+span.half { padding-left: 3cm}
+span.header { color: cornsilk }
+span.head { font-size: medium }
+span.invisible { color: transparent }
+span.information { color: dimgrey; font-size: 12px; padding-left: 4px }
+span.deleted {padding:none; color:red }
+span.transposed { color: grey }
+span.added { color: blue }
+span.overstrike{text-decoration:line-through}
+span.founddeleted { color: green;}
+span.foundadded { color: green;}
+span.groupHeader {font-size: 14px; font-weight: bold }
+span.groupName {font-size: 14px; }
+span.half { color: orange }
+span.header { color: cornsilk }
+span.selected { background-color: LightSkyBlue }
+span.role {font-style: italic; font-size: 12pt}
+span.speaker {font-size: 12px; font-weight: bold}
+span.stageitalic {font-size: 12px; font-style: italic }
+span.sp {font-size: 12pt}
+
+/* MVDTouch layout and styles */
+span.note span {
+    color:white
+}
+span.note {
+    width:1px;
+    height:1px;
+    z-index: 10000;
+    color: white;
+}
+span.note-content {
+     background-color:#212121;
+     border-bottom-left-radius: 3px 3px;
+     border-bottom-right-radius: 3px 3px;
+     border-top-left-radius: 3px 3px;
+     border-top-right-radius: 3px 3px;
+     color: white;
+     text-align: center;
+}
+.ui-layout-north {
+	border-bottom: 1px solid #CCCCCC;
+}
+#header-left {
+    float: left;
+    margin-left: 10px;
+}
+#header-right {
+    float: right;
+    position: relative;
+    right: 110px;
+}
+.ui-layout-east {
+    padding-left: 7px;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+.version-label, .edition-label {
+    height: 10px;
+    text-align: left;
+    font-size: 10px;
+    font-style: italic;
+}
+.slider-label-sep {
+    margin-right: 3px;
+}
+.version-label, .slider-label-sep {
+    width: 75px;
+    position: absolute;
+    right: 2px;
+    color: #555555;
+}
+.edition-label {
+    font-style: normal;
+    color: #212121;
+    font-weight: bold;
+}
+#bottom-edition-label {
+    padding-top: 5px;
+}
+#top-edition-label {
+    padding-bottom: 5px;
+}
+
+#slider {
+    /* Draw a thin bar with rounded ends for slider */
+    height: 100%;
+    border-radius: 3px;
+    background-color: #CCCCCC;
+    border: 1px solid #AAAAAA;
+    width: 3px;
+    /* adjust margins so that slider bar overhangs ends a bit more, 
+     * plus add extra length via padding to compensate for margins */
+    margin-top:-6px;
+    margin-bottom:-6px;
+    padding-bottom:12px;
+}
+.ui-slider-vertical .ui-slider-handle {
+    /* iOS-style handles for slider */
+    outline: none;
+    position: absolute; 
+    z-index: 2;
+    cursor: pointer;
+    margin-left: 0; 
+    margin-bottom: -14px;
+    width: 24px;
+    height: 24px;
+    left: -9px;
+    background-position: 0 -23px;
+    background-image: url(../images/slider_handles.png);
+}
+.ui-slider-vertical .ui-slider-handle:hover {
+    background-position: 0 0;
+}
+.noteMarker {
+    float:left;
+    font-size: small;
+    color:#555555;
+    position:absolute;
+    left: 3px;
+}
