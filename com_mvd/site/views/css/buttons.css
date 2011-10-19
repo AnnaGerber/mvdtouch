@@ -1,0 +1,21 @@
+button.work, button.description
+{
+	border: 0px;
+	font: normal normal 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background-color: transparent;
+	text-align: left;
+	padding-left: 2px;
+}
+button.folder, button.folderdescription
+{
+	border: 0px;
+	font: bold 12px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background-color: transparent;
+	text-align: left;
+	padding-left: 2px;
+}
+input.button
+{
+	width: 100px;
+}
+

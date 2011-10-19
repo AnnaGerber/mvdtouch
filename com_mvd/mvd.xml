@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0">
+ <name>MVD</name>
+  <creationDate>2009-12-08</creationDate>
+ <author>Desmond Schmidt</author>
+ <authorEmail>schmidda@qut.edu.au</authorEmail>
+ <copyright>Desmond Schmidt 2009</copyright>
+ <license>GPL v3</license>
+ <version>1.01</version>
+ <description>GUI Interface to nmerge tool</description>
+ <install>
+  <sql>
+    <file driver="mysql" charset="utf8">install.mvd.sql</file>
+  </sql>
+ </install>
+ <uninstall>
+  <sql>
+    <file driver="mysql" charset="utf8">uninstall.mvd.sql</file>
+  </sql>
+ </uninstall>
+ <files>
+  <filename>dbconn.properties</filename>
+  <filename>dbtempconn.properties</filename>
+  <filename>mysql-connector-java-5.1.10-bin.jar</filename>
+  <filename>nmerge.jar</filename>
+  <filename>fitch</filename>
+  <filename>drawtree</filename>
+ </files>
+ <files folder="site">
+  <filename>controllers/mvdlist-controller.php</filename>
+  <filename>controllers/import-controller.php</filename>
+  <filename>controllers/edit-controller.php</filename>
+  <filename>controllers/view-controller.php</filename>
+  <filename>controllers/twin-controller.php</filename>
+  <filename>controllers/general-controller.php</filename>
+  <filename>controllers/tree-controller.php</filename>
+  <filename>controllers/versions-controller.php</filename>
+  <filename>controller.php</filename>
+  <filename>mvd.php</filename>
+  <filename>index.html</filename>
+  <filename>views/index.html</filename>
+  <filename>views/mvdlist/index.html</filename>
+  <filename>views/mvdlist/view.html.php</filename>
+  <filename>views/mvdlist/tmpl/default.php</filename>
+  <filename>views/mvdlist/tmpl/index.html</filename>
+  <filename>views/mvdedit/index.html</filename>
+  <filename>views/mvdedit/view.html.php</filename>
+  <filename>views/mvdedit/tmpl/default.php</filename>
+  <filename>views/mvdedit/tmpl/index.html</filename>
+  <filename>views/mvdsingle/index.html</filename>
+  <filename>views/mvdsingle/view.html.php</filename>
+  <filename>views/mvdsingle/tmpl/default.php</filename>
+  <filename>views/mvdsingle/tmpl/index.html</filename>
+  <filename>views/mvdtwin/index.html</filename>
+  <filename>views/mvdtwin/view.html.php</filename>
+  <filename>views/mvdtwin/tmpl/default.php</filename>
+  <filename>views/mvdtwin/tmpl/index.html</filename>
+  <filename>views/tree/index.html</filename>
+  <filename>views/tree/view.html.php</filename>
+  <filename>views/tree/tmpl/default.php</filename>
+  <filename>views/tree/tmpl/index.html</filename>
+  <filename>views/import/index.html</filename>
+  <filename>views/import/view.html.php</filename>
+  <filename>views/import/tmpl/default.php</filename>
+  <filename>views/import/tmpl/index.html</filename>
+  <filename>views/importconfirm/index.html</filename>
+  <filename>views/importconfirm/view.html.php</filename>
+  <filename>views/importconfirm/tmpl/default.php</filename>
+  <filename>views/importconfirm/tmpl/index.html</filename>
+  <filename>views/importerror/index.html</filename>
+  <filename>views/importerror/view.html.php</filename>
+  <filename>views/importerror/tmpl/default.php</filename>
+  <filename>views/importerror/tmpl/index.html</filename>
+  <filename>views/versions/index.html</filename>
+  <filename>views/versions/view.html.php</filename>
+  <filename>views/versions/tmpl/default.php</filename>
+  <filename>views/versions/tmpl/index.html</filename>
+  <filename>views/graphics/Collapse24.gif</filename>
+  <filename>views/graphics/Delete24.gif</filename>
+  <filename>views/graphics/Edit24.gif</filename>
+  <filename>views/graphics/Expand24.gif</filename>
+  <filename>views/graphics/Move24.gif</filename>
+  <filename>views/graphics/New24.gif</filename>
+  <filename>views/graphics/NewFolder24.gif</filename>
+  <filename>views/graphics/Open24.gif</filename>
+  <filename>views/graphics/Refresh24.gif</filename>
+  <filename>views/graphics/Save24.gif</filename>
+  <filename>views/graphics/Search24.gif</filename>
+  <filename>views/graphics/SearchAll24.gif</filename>
+  <filename>views/graphics/Up24.gif</filename>
+  <filename>views/graphics/ZoomIn24.gif</filename>
+  <filename>views/graphics/ZoomOut24.gif</filename>
+  <filename>views/graphics/Forward16.gif</filename>
+  <filename>views/graphics/Down16.gif</filename>
+  <filename>views/css/phaidros.css</filename>
+  <filename>models/mvd.php</filename>
+  <filename>utils/IconButton.php</filename>
+  <filename>utils/PathChunk.php</filename>
+  <filename>utils/Progress.php</filename>
+  <filename>utils/sprogress.php</filename>
+  <filename>utils/VersionTable.php</filename>
+  <filename>utils/MatchSet.php</filename>
+  <filename>utils/LoadModule.php</filename>
+  <filename>utils/ChunkHandler.php</filename>
+  <filename>utils/HTMLVariantFormatter.php</filename>
+  <filename>xsl/formats.xsl</filename>
+  <filename>xsl/view-versions.xsl</filename>
+  <filename>xsl/edit-versions.xsl</filename>
+ </files>
+ <languages>
+ 	<language tag="en-GB">en-GB.com_mvd.ini</language>
+ </languages>
+ <administration>
+  <!-- Administration Menu Section -->
+  <menu>MVD</menu>
+  <!-- Administration Main File Copy Section -->
+  <files>
+     <filename>install.mvd.sql</filename>
+     <filename>uninstall.mvd.sql</filename>
+  </files>
+  <files folder="admin">
+   <filename>mvd.php</filename>
+   <filename>index.html</filename>
+  </files>
+ </administration>
+</install>

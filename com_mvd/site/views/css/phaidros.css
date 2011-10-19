@@ -1,0 +1,62 @@
+a.nav { display: block; background-color: #006699; width: 158px; color: #ffffff; font-size: 12px; line-height: 22px }
+p,td { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-decoration: none; color: #000000; line-height: 1.5em }
+button.enabled { padding: 0; text-align: center; width: auto; color: cornsilk; background-color: transparent; border: 0 }
+button.enabled:hover { cursor:pointer }
+button.disabled { padding: 0; text-align: center; width: auto; color: Red; background-color: transparent; border: 0 }
+body { margin: 0; padding-top: 0; background-color: lightgrey }
+div.twinCentreColumn { border: 0; position: relative; height: 805px; top: 40px; background-color: white; width: 978px; margin-left: auto; margin-right: auto; text-align: left }
+div#central { border: 0; position: relative; height: 805px; top: 40px; background-color: white; width: 978px; margin-left: auto; margin-right: auto; text-align: left }
+div#displaybox1 { overflow: auto; height: 700px; width: 550px; padding-right: 4px }
+div#displaybox2 { overflow: auto; height: 700px; width: 550px; padding-right: 4px }
+div.infoBox { padding-top: 5px; padding-bottom: 5px }
+div.twinInfoBox { padding-top: 5px; padding-bottom: 5px; max-width: 480px; height: 40px; margin: 0 }
+div.searchbox { background-color: lightgrey; font-size:12px; position: relative; bottom: 0; text-align: center; padding-top: 0px; padding-bottom: 0px;}
+div.windowbox { width:100%; border-top: 4px solid lightgrey; border-right: 4px; padding-right: 4px } 
+div#leftColumn {background-color: white; float: left; left: auto; margin-right: 5px }
+div#rightColumn {background-color: white; float: right; right: auto; margin-left: 5px }
+div.login { padding-top: 100px }
+div.poem { margin-left: 1cm; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px }
+div#scrolling { width : 400px; height : 200px; overflow : auto; }
+input,textarea,select { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px }
+input#variants { width: 30px }
+html {background-color: lightgrey; }
+h3 { text-align: center; font-family: Times, serif; font-weight: bold; font-size: 18px }
+li.version { margin-left: 12px; text-indent: -12px }
+li.group { margin-left: 12px; text-indent: -12px }
+p.description { text-align: center }
+p.groupPrompt { padding-bottom: 20px; padding-top: 100px }
+p.stageitalic {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: italic }
+p.stage {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px }
+p.versionHeader { font-family: Verdana; font-size: 14px; font-weight: bold; padding-bottom: 10px; padding-top: 50px; text-align: center }
+p.sp {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px}
+p.cast {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px}
+p.lg {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px}
+select.number { font-size: 12px; font-weight: bold; text-align: center }
+select.work {height: 140px }
+span.sigla{font-style:italic}
+span.half { padding-left: 3cm}
+span.header { color: cornsilk }
+span.head { font-size: medium }
+span.invisible { color: transparent }
+span.information { color: dimgrey; font-size: 12px; padding-left: 4px }
+span.phaidros { font-family: sans-serif; font-size: 20px; color: darkorange; padding-right: 20px }
+span.deleted { color: red }
+span.transposed { color: grey }
+span.added { color: blue }
+span.founddeleted { color: red; background-color: LightSkyBlue }
+span.foundadded { color: blue; background-color: LightSkyBlue }
+span.groupHeader { font-family: Verdana; font-size: 14px; font-weight: bold }
+span.groupName { font-family: Verdana; font-size: 14px; }
+span.half { color: orange }
+span.header { color: cornsilk }
+span.selected { background-color: LightSkyBlue }
+span.role {font-family: Verdana, Arial, Helvetica, sans-serif; font-style: italic; font-size: 12pt}
+span.speaker {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold}
+span.stageitalic {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-style: italic }
+span.sp {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12pt}
+table.group { margin-top: 100px; }
+table.header { background-color: lightgrey }
+textarea.description {height: 140px }
+textarea.information {height: 18px; vertical-align:top; width: auto }
+textarea.editfield { height: 700px; width: 550px; overflow: auto; padding:0px; border:0px; margin:0px; font-size:12px;line-height:16px }
+ul { list-style-type: none }

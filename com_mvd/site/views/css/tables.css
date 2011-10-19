@@ -1,0 +1,34 @@
+table#table
+{
+	width: 550px;
+	margin-left: auto; margin-right: auto; text-align: left;
+}
+table#tablecontainer
+{
+	width: 550px;
+	margin-left: auto; margin-right: auto; text-align: left;
+	margin-top: 50px;
+}
+table#myScrollTable {
+	text-align: left;
+	font-size: 12px;
+	width: 100%;
+	font-family: verdana;
+	background: #c0c0c0;
+}
+table#myScrollTable thead  {
+	cursor: pointer;
+}
+table#myScrollTable thead tr,
+table#myScrollTable tfoot tr {
+	background: #c0c0c0;
+}
+table#myScrollTable tbody tr {
+	background: #f0f0f0;
+}
+table#myScrollTable tbody tr td {
+	border: 1px solid white;
+}
+table#myScrollTable thead tr td {
+	border: 1px solid white;
+}

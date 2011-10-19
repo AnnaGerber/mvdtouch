@@ -1,0 +1,135 @@
+<html>
+<head>
+<script type="text/javascript" src="ierange-m2.js"></script>
+<script type="text/javascript">
+/**
+ * Get the distance from a node's parent to the closing 
+ * angle-bracket of its child
+ * @param head stop when you reach this element
+ * @param parent the parent of the node
+ * @param child the child node itself
+ */
+function getDistanceToChild( head, parent, child )
+{
+	// work out where the child starts in the parent's innerHTML
+	var temp = parent.firstChild;
+	var index = 0;
+	var i;
+	var html = parent.innerHTML;
+	var state = 0;
+	var j = 0;
+	var len = 0;
+	while ( temp != child )
+	{
+		if ( temp.firstChild != null )
+			index++;			
+		temp = temp.nextSibling;
+	}
+	// seek the index'th '>' in innerHTML
+	for ( j=0,i=0;i<html.length;i++ )
+	{
+		switch ( state )
+		{
+			// looking for tag
+			case 0:
+				if ( html.charAt(i)=='<' )
+					state = 1;
+				break;
+			// reading tag
+			case 1:
+				if ( html.charAt(i)=='/' )
+					state = 2;
+				else 
+					state = 3;
+				break;
+			// reading end-tag
+			case 2:
+				if ( html.charAt(i)=='>' )
+					state = 0;
+				break;
+			// reading start or empty tag
+			case 3:
+				if ( html.charAt(i)=='/' )
+					state = 4;
+				else if ( html.charAt(i)=='>' )
+				{
+					if ( j == index )
+					{
+						len = i+1;
+						state = -1;
+					}
+					else
+					{
+						j++;
+						state = 0;
+					}
+				}
+				break;
+			// reading empty tag
+			case 4:
+				if ( html.charAt(i)=='>' )
+				{
+					if ( j==index )
+					{
+						len = i+1;
+						state = -1;
+					}
+					else
+						state = 0;
+				}
+				break;
+		}
+		if ( state == -1 )
+			break;
+	}
+	if ( parent != head )
+		return len+getDistanceToChild( head, parent.parentNode, parent );
+	else
+		return len;
+}
+/**
+ * Get the current selection as an offset+length pair.
+ */
+function get_selection()
+{
+	var selection;
+	if ( !window.getSelection )
+		selection = new DOMSelection(document);
+	else
+		selection = window.getSelection();
+	if ( selection != null )
+	{
+		if ( !selection.isCollapsed )
+		{
+			var head = document.getElementById("test");
+			var range = range = selection.getRangeAt(0);
+			var htmlStart = range.startOffset
+				+getDistanceToChild(head,
+				range.startContainer.parentNode.parentNode,
+				range.startContainer.parentNode);
+			var htmlEnd = range.endOffset+getDistanceToChild(head,
+				range.endContainer.parentNode.parentNode,
+				range.endContainer.parentNode);
+			var htmlLen = htmlEnd-htmlStart;
+			alert("htmlOffset="+htmlStart+". htmlLen="+htmlLen);
+		}
+	}
+	else
+		alert("selection was null");
+	
+}
+window.onmouseup=get_selection;
+document.onmouseup=get_selection;
+</script>
+</head>
+<body>
+<div id="test">
+<h3>Lorem Ipsum</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sapien metus, scelerisque non euismod non, volutpat nec massa. Vivamus sit amet euismod sem. Nam quis eros leo. Morbi sed diam vitae mauris tempus condimentum. Quisque dui libero, semper ut egestas non, vestibulum nec sapien. Donec varius, ante fermentum consectetur ornare, tellus dolor hendrerit diam, ut lobortis purus diam ut nulla. Pellentesque tincidunt eros at nisi tincidunt suscipit malesuada leo cursus. Nam dapibus velit vitae ipsum euismod id sodales augue viverra. Pellentesque ut risus eu felis molestie porttitor a a ipsum. Cras sed risus non dolor mattis viverra. Ut eget est massa. Nulla pretium cursus posuere. Donec gravida enim mauris, sed lobortis sem. Phasellus vitae sapien nibh, at vestibulum urna. Nulla accumsan sollicitudin tellus et iaculis. Etiam bibendum, quam ut vehicula euismod, sapien ipsum consectetur dui, nec scelerisque velit neque quis purus. Nunc et massa nec arcu viverra tristique condimentum ut massa. Ut eu risus sapien.</p>
+<p>Praesent sed felis at ligula venenatis rutrum. Integer consectetur condimentum consequat. Pellentesque felis velit, ultricies a ullamcorper nec, varius rutrum purus. Nam orci lorem, vulputate sit amet lobortis ut, faucibus et sapien. Fusce quis ante lacus, ac auctor risus. Donec convallis molestie turpis a facilisis. Nam luctus dapibus mollis. Pellentesque suscipit rhoncus elit, non consequat nunc faucibus nec. Vestibulum nunc urna, volutpat vitae tempus non, accumsan et purus. Sed et ipsum quis mi lacinia convallis nec ac nunc. Sed nibh justo, pellentesque ut aliquam vel, convallis <em>in mi.</em></p>
+<p>Fusce rutrum, quam et pellentesque ullamcorper, lacus eros malesuada massa, quis accumsan massa tortor sit amet est. Donec eu mi sapien. Vestibulum volutpat, est sit amet bibendum tempor, lacus diam suscipit sapien, ac pretium arcu leo eget augue. Aliquam lobortis suscipit vestibulum. Etiam nisi nisi, gravida eu egestas nec, hendrerit vitae augue. Ut a mauris non ligula tincidunt consequat vitae a urna. Sed id nulla libero. In hac habitasse platea dictumst. Nulla at nisi non neque volutpat fermentum non quis purus. Pellentesque ut justo sem, sed congue mauris. Class aptent taciti sociosque ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur iaculis porta justo, non mollis odio sodales nec. Sed tincidunt tempus nibh non ullamcorper. Pellentesque sed lectus purus, ut eleifend nibh. Donec sodales vulputate luctus. In posuere laoreet nisl et iaculis. Maecenas eget eros turpis, sit amet scelerisque est. Nam ullamcorper massa eget lorem congue ac ornare nunc dignissim.</p>
+<p>Ut eget tristique urna. Pellentesque iaculis placerat tempor. Nam mattis, urna nec commodo pharetra, diam sapien vestibulum ligula, sit amet posuere neque mi non ante. Sed suscipit nibh a ipsum ornare accumsan. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed luctus facilisis urna non rutrum. In hac habitasse platea dictumst. Proin tincidunt, ligula non dignissim mattis, magna metus iaculis metus, vitae mattis sapien nisl non felis. Integer dictum fermentum eros in rutrum. Cras urna turpis, accumsan sit amet mattis at, volutpat in dui. Maecenas interdum fermentum tellus vel euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce vel arcu eu sem facilisis feugiat ullamcorper eget nisl. Duis vitae est nec ante sodales suscipit.</p>
+<p>Ut dictum, risus quis tristique fringilla, lectus massa sodales tellus, eget euismod mi tellus et mauris. Maecenas aliquet, nisi non molestie placerat, mi est luctus arcu, at ultricies tellus ligula in eros. Morbi dapibus, dui a accumsan feugiat, lectus magna elementum nibh, sit amet blandit lorem metus at sapien. Proin vitae diam sit amet felis congue accumsan quis a dolor. Fusce porta eros sed massa condimentum scelerisque in et turpis. Nunc rhoncus consectetur ipsum, sit amet faucibus eros porttitor sit amet. Vestibulum sit amet sem nec leo accumsan malesuada quis ut eros. Integer sit amet urna ipsum. Pellentesque eu odio magna, vitae dapibus ipsum. In dapibus nunc vel orci molestie convallis. Quisque bibendum, tortor in auctor posuere, turpis eros suscipit erat, nec lacinia arcu risus in sem. </p>
+</div>
+</body>
+</html>

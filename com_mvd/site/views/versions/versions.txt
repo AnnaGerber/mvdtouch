@@ -1,0 +1,7 @@
+one display
+1. ensure we have a MVD name
+2. list the variants in the MVD. Convert them into a VariantTable
+3. Convert the VariantTable into XML
+4. Transform the VariantTable XML into HTML (editable or not, depending on the user)
+5. As the user interacts with the form, modify the view (expanding the version or group description) and send the changed configuration back to the server for updating.
+6. Remember the state of the expansion/collapse of the version table, recording the object in the session. (But don't save that information back to the model).

@@ -1,0 +1,15 @@
+How to install MVD_GUI
+1. Make .zip archives of the com_mvd, mod_windowbox, mod_infobox and mod_searchbox folders. Then install them using the Joomla admin account.
+2. The server requires Java 1.6 or higher installed, also the xsl module for php. Php safe mode must be turned off.
+3. You have to compile drawtree, fitch and possibly gs. I don't supply the gs 8.71 source files, but you can find them on the Internet. Don't use the gnu ones because they don't work. The compile scripts for fitch and drawtree are in the drawtree folder, called drawtree.sh and fitch.sh. You can run them remotely by invoking a simple php script:
+<?php
+echo system("./drawtree.sh 2>&1" );
+?>
+Just modify this for fitch. The output appears in the browser (thanks to the "2>&1"), so you can check if it worked.
+
+If you already have ghostscript installed on your server it should just work. Otherwise you will have to configure and make it. The configure options I used to reduce the size were:
+
+./configure --disable-fontconfig --disable-cups --disable-gtk --disable-cairo --without-ijs --without-libpaper --without-jbig2dec --without-omni --with-drivers=jpeg
+
+Again you will have to execute this on the server via a small php script like the one above. Once it is configured you will have to make it and copy the resultant gs file to the top level of the com_mvd folder.
+
