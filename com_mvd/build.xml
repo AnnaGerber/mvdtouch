@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com_mvd" basedir="." default="copy_to_joomla">
+ 
+    <property name="joomla" value="../../joomla"/>
+    <property name="joomlaadmin" value="${joomla}/administrator/components/com_mvd"/>
+    <property name="joomlasite" value="${joomla}/components/com_mvd"/>
+    
+    <property name="src" value="."/>
+    
+    <fileset dir="${src}/site" id="component_files">
+        <include name="**" />
+    </fileset>
+ 
+    <!-- copy files from this project to joomla installation -->
+    <target name="copy_to_joomla" description="copy files to joomla">
+        <echo>Copying files</echo>
+        <!-- admin files -->
+        <copy todir="${joomlaadmin}" file="${src}/admin/index.html"/>
+        <copy todir="${joomlaadmin}" file="${src}/install.mvd.sql"/>
+        <copy todir="${joomlaadmin}" file="${src}/admin/mvd.php"/>
+        <copy todir="${joomlaadmin}" file="${src}/mvd.xml"/>
+        <copy todir="${joomlaadmin}" file="${src}/uninstall.mvd.sql"/>
+        
+        <!-- site files -->
+        <copy todir="${joomlasite}">
+            <fileset refid="component_files" />
+        </copy>
+        <copy todir="${joomlasite}" file="${src}/dbconn.properties"/>
+        <copy todir="${joomlasite}" file="${src}/dbtempconn.properties"/>
+        <copy todir="${joomlasite}" file="${src}/mysql-connector-java-5.1.10-bin.jar"/>
+        <copy todir="${joomlasite}" file="${src}/nmerge.jar"/>
+    </target>
+</project>
