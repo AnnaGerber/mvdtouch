@@ -30,6 +30,7 @@ require_once( JPATH_COMPONENT.DS.'controllers'.DS.'view-controller.php' );
 require_once( JPATH_COMPONENT.DS.'controllers'.DS.'twin-controller.php' );
 require_once( JPATH_COMPONENT.DS.'controllers'.DS.'tree-controller.php' );
 require_once( JPATH_COMPONENT.DS.'controllers'.DS.'versions-controller.php' );
+require_once( JPATH_COMPONENT.DS.'controllers'.DS.'fragment-controller.php' );
 /**
  * MVD Component Controller
  */
@@ -60,8 +61,11 @@ class MVDController extends JController
 			$classname = 'MVDControllerVersions';
 		else if ( strcasecmp($viewName,"tree")==0 )
 			$classname = 'MVDControllerTree';
+		else if (strcasecmp($viewName,"fragment")==0)
+		    $classname = 'MVDControllerFragment';
 		if ( $classname )
 		{
+			error_log("controller");
 			$controller = new $classname();
 			// Perform the Request task
 			$controller->execute( JRequest::getVar('task') );
@@ -146,3 +150,4 @@ class MVDController extends JController
 	{
 	}
 }
+?>

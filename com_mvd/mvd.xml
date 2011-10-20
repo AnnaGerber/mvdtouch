@@ -35,7 +35,9 @@
   <filename>controllers/general-controller.php</filename>
   <filename>controllers/tree-controller.php</filename>
   <filename>controllers/versions-controller.php</filename>
+  <filename>controllers/fragment-controller.php</filename>
   <filename>controller.php</filename>
+  <!--filename>router.php</1filename-->
   <filename>mvd.php</filename>
   <filename>index.html</filename>
   <filename>views/index.html</filename>
@@ -55,6 +57,10 @@
   <filename>views/mvdtwin/view.html.php</filename>
   <filename>views/mvdtwin/tmpl/default.php</filename>
   <filename>views/mvdtwin/tmpl/index.html</filename>
+  <filename>views/fragment/index.html</filename>
+  <filename>views/fragment/view.raw.php</filename>
+  <filename>views/fragment/templ/index.html</filename>
+  <filename>views/fragment/tmpl/default.php</filename>
   <filename>views/tree/index.html</filename>
   <filename>views/tree/view.html.php</filename>
   <filename>views/tree/tmpl/default.php</filename>
