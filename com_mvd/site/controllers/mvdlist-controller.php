@@ -166,11 +166,14 @@ class MVDControllerList extends JController
     {
 		$session = &JFactory::getSession();
 		$session->set( 'selected_mvd', $_REQUEST['name'] );
-		parent::setRedirect("http://".
+		/*parent::setRedirect("http://".
 			$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].
 			"?option=com_mvd&view=MVDSingle&name=".$_REQUEST['name']
 			."&version1=".$_REQUEST['version1']);
-	 	parent::redirect();  
+	 	parent::redirect();*/
+		parent::setRedirect(JRoute::_("index.php?option=com_mvd&view=mvdsingle&name=".$_REQUEST['name']
+			."&version1=".$_REQUEST['version1']));
+		parent::redirect();  
     }
     /**
      * Edit the MVD specified in the input parameters
