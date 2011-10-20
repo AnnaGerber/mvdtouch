@@ -54,8 +54,7 @@ class MvdViewMvdtwin extends JView
 	{
 		$xp = new XsltProcessor();
 		$xsl = new DomDocument;
-		$xsl->load( JPATH_BASE.DS."components".DS."com_mvd"
-			.DS."xsl".DS."formats.xsl" );
+		$xsl->load( JPATH_BASE."/components/com_mvd/xsl/formats.xsl" );
 		$xp->importStylesheet( $xsl );
 		$xmlDoc = new DomDocument;
 		if ( $side == 1 )
@@ -110,8 +109,8 @@ class MvdViewMvdtwin extends JView
 		// searchbox without windowbox button
 		$component = substr(JPATH_COMPONENT,strlen(JPATH_ROOT),
 			strlen(JPATH_COMPONENT)-strlen(JPATH_ROOT));
-		$searchPath= $component.DS.'views'.DS.'graphics'.DS.'Search24.gif';
-		$searchAllPath= $component.DS.'views'.DS.'graphics'.DS.'SearchAll24.gif';
+		$searchPath= 'components/com_mvd/views/graphics/Search24.gif';
+		$searchAllPath= 'components/com_mvd/views/graphics/SearchAll24.gif';
 		$search_params = array(
 			'pattern'=>$_REQUEST['pattern'.$side],
 			'searchboxId'=>$side,

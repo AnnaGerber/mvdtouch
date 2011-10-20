@@ -22,6 +22,7 @@ defined('_JEXEC') or die('Restricted access');
 set_include_path(get_include_path().PATH_SEPARATOR.JPATH_COMPONENT.DS.'utils');
 require_once('LoadModule.php');
 ?>
+<LINK REL=StyleSheet HREF="components/com_mvd/views/css/phaidros.css" TYPE="text/css">
 <style type="text/css">
 div#displaybox1 
 { 
@@ -187,7 +188,7 @@ function getMainDivHeight()
 }
 window.onload=resizeWindow;
 </script>
-<form name="submission" action="index.php" method="POST">
+<form name="submission" action="<?php echo JRoute::_('index.php') ?>" method="POST">
 <div id="central">
 <!-- information box -->
 <?php 
@@ -211,12 +212,15 @@ echo LoadModule::getModule("mod_infobox",$info_params);
 </div>
 <!-- window box -->
 <?php
-$component = substr(JPATH_COMPONENT,strlen(JPATH_ROOT),
+$component = 'components/com_mvd';
+/*substr(JPATH_COMPONENT,strlen(JPATH_ROOT),
 	strlen(JPATH_COMPONENT)-strlen(JPATH_ROOT));
-$expandPath = $component.DS.'views'.DS.'graphics'.DS.'Expand24.gif';
-$collapsePath= $component.DS.'views'.DS.'graphics'.DS.'Collapse24.gif';
-$searchPath= $component.DS.'views'.DS.'graphics'.DS.'Search24.gif';
-$searchAllPath= $component.DS.'views'.DS.'graphics'.DS.'SearchAll24.gif';
+	*/
+	
+$expandPath = $component.'/views/graphics/Expand24.gif';
+$collapsePath= $component.'/views/graphics/Collapse24.gif';
+$searchPath= $component.'/views/graphics/Search24.gif';
+$searchAllPath= $component.'/views/graphics/SearchAll24.gif';
 $variant_params = array(
 	'windowboxId'=>'windowbox1',
 	'displayboxId'=>'displaybox1',

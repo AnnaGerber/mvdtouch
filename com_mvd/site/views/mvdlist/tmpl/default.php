@@ -568,7 +568,7 @@ div#central
 	text-align: left;
 }
 </style>
-<form action="index.php" method="post" name="submission">
+<form action="<?php echo JRoute::_('index.php') ?>" method="post" name="submission">
 <table id="tablecontainer">
 <tr>
 <td>

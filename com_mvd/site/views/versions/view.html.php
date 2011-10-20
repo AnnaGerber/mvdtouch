@@ -45,21 +45,18 @@ class MvdViewVersions extends JView
     {
 		$xp = new XSLTProcessor();
 		$xsl = new DomDocument;
-		$xp->setParameter("","collapsedimage",JURI::base(true).DS."components"
-			.DS."com_mvd".DS."views".DS."graphics".DS."Forward16.gif");
-		$xp->setParameter("","expandedimage",JURI::base(true).DS."components"
-			.DS."com_mvd".DS."views".DS."graphics".DS."Down16.gif");
+		$xp->setParameter("","collapsedimage",JURI::base(true)."/components/com_mvd/views/graphics/Forward16.gif");
+		$xp->setParameter("","expandedimage",JURI::base(true)."/components/com_mvd/views/graphics/Down16.gif");
 		$user =& JFactory::getUser();
 		if ( $user->usertype=="Super Administrator" 
 			|| $user->usertype=="Editor" )
 		{
-			$xsl->load( JPATH_BASE.DS."components".DS."com_mvd"
-				.DS."xsl".DS."edit-versions.xsl" );
+			$xsl->load( JPATH_BASE."/components/com_mvd/xsl/edit-versions.xsl" );
 		}
 		else
 		{
-			$xsl->load( JPATH_BASE.DS."components".DS."com_mvd"
-				.DS."xsl".DS."view-versions.xsl" );
+			$xsl->load( JPATH_BASE."/components/com_mvd/"
+				."xsl/view-versions.xsl" );
 		}
 		$xp->importStylesheet( $xsl );
 		$xmlDoc = new DomDocument;

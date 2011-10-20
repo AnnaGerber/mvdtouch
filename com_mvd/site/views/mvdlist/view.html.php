@@ -126,9 +126,11 @@ class MvdViewMvdlist extends JView
 	 */ 
 	function addToolbarButton( $icon, $title, $script, $disabled, $id, $submit )
 	{
-		$component = substr(JPATH_COMPONENT,strlen(JPATH_ROOT),
-			strlen(JPATH_COMPONENT)-strlen(JPATH_ROOT));
-		$path = $component.DS.'views'.DS.'graphics'.DS.$icon;
+		//$component = substr(JPATH_COMPONENT,strlen(JPATH_ROOT),
+		//	strlen(JPATH_COMPONENT)-strlen(JPATH_ROOT));
+		// hardcode to make paths work on windows
+		$component = 'components/com_mvd';
+		$path = $component.'/views/graphics/'.$icon;
 		$newButton = $title.':'.$path.':'.$script.':'.$submit.':'.$id.':'.$disabled;
 		$iconButton = new IconButton($newButton);
 		echo $iconButton->toHTML().'&nbsp;';

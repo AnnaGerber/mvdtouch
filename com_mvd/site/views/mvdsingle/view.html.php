@@ -82,8 +82,7 @@ class MvdViewMvdsingle extends JView
 		$this->name = $name;
 		$xp = new XsltProcessor();
 		$xsl = new DomDocument;
-		$xsl->load( JPATH_BASE.DS."components".DS."com_mvd"
-			.DS."xsl".DS."formats.xsl" );
+		$xsl->load( JPATH_BASE."/components/com_mvd/xsl/formats.xsl" );
 		$xp->importStylesheet( $xsl );
 		$xmlDoc = new DomDocument;
 		$xmlDoc->loadXML( $xml );
@@ -98,7 +97,7 @@ class MvdViewMvdsingle extends JView
 			$htmlStarts = array();
 			$xmlStarts = array();
 			$table = array();
-			//error_log("Length of HTML=".strlen($this->html));
+			error_log("Length of HTML=".strlen($this->html));
 			$this->parse( $this->html, $htmlStarts, false );
 			$this->parse( $xml, $xmlStarts, true );
 			// get unique alignable strings in both html and xml
@@ -147,7 +146,7 @@ class MvdViewMvdsingle extends JView
 					if ( $tok == '<' )
 					{
 						$key = trim(substr($text,$start,$length));
-						if ( $snakes[$key] )
+						if ($snakes[$key])
 							$snakes[$key]->inc();
 						else if ( $usex )
 							$snakes[$key] = new Snake($length,$start,0);

@@ -243,7 +243,7 @@ window.onload=resizeTwinColumns;
 </script>
 </head>
 <body>
-<form name="submission" action="index.php" method="POST">
+<form name="submission" action="<?php echo JRoute::_('index.php') ?>" method="POST">
 <!-- wrapper for twin columns -->
 <div id="twinCentreColumn">
 <?php

@@ -399,14 +399,16 @@ echo LoadModule::getModule("mod_infobox",$info_params);
 </textarea>
 <!-- window box -->
 <?php
-$component = substr(JPATH_COMPONENT,strlen(JPATH_ROOT)+1,
+$component = 'components/com_mvd';
+/*substr(JPATH_COMPONENT,strlen(JPATH_ROOT)+1,
 	strlen(JPATH_COMPONENT)-strlen(JPATH_ROOT));
-$expandPath = $component.DS.'views'.DS.'graphics'.DS.'Expand24.gif';
-	$collapsePath= $component.DS.'views'.DS.'graphics'.DS.'Collapse24.gif';
-$searchPath= $component.DS.'views'.DS.'graphics'.DS.'Search24.gif';
-$searchAllPath= $component.DS.'views'.DS.'graphics'.DS.'SearchAll24.gif';
-$revertPath = $component.DS.'views'.DS.'graphics'.DS.'Refresh24.gif';
-$savePath= $component.DS.'views'.DS.'graphics'.DS.'Save24.gif';
+	*/
+$expandPath = $component.'/views/graphics/Expand24.gif';
+	$collapsePath= $component.'/views/graphics/Collapse24.gif';
+$searchPath= $component.'/views/graphics/Search24.gif';
+$searchAllPath= $component.'/views/graphics/SearchAll24.gif';
+$revertPath = $component.'/views/graphics/Refresh24.gif';
+$savePath= $component.'/views/graphics/Save24.gif';
 $variant_params = array(
 	'windowboxId'=>'windowbox1',
 	'displayboxId'=>'displaybox1',

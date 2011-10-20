@@ -20,7 +20,7 @@
 defined('_JEXEC') or die('Restricted access'); 
 ?>
 <?php echo $this->html;?>
-<form name="submission" action="index.php" method="POST">
+<form name="submission" action="<?php echo JRoute::_('index.php') ?>" method="POST">
 <input id="task" name="task" type="hidden"/>
 <input type="hidden" name="option" value="com_mvd" />
 <input type="hidden" name="view" value="versions" />

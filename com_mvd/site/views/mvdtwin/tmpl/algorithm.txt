@@ -1,6 +1,0 @@
-1. find the side which has moved since the last call to the function.
-2. find the span on that side, which is closest to the centre of its displaybox div
-3. Find the corresponding span on the other side by its ID. e.g. if the first span is d23f the the corresponding one on the other wide will be a23f. 
-4. Compute the topOffset of the first span relative to the top of the displaybox div. 
-5. Compute the topOffset of the second span relative to its display div.
-6. Set the scroll position of the second div to the topOffset of the span - half the displaybox height.
