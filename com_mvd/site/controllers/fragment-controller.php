@@ -58,8 +58,11 @@ class MVDControllerFragment extends JController
     /**
      * Method to display the view.
      * @access public
-     * Modified version of twin view that returns html fragments only - use it like this:
-     * index.php?option=com_mvd&view=fragment&format=raw&name=oldmate&version1=1&version2=3&side=lhs
+     * Modified version of twin view that returns formatted html and version info for MVDTouch demo
+     * Get html fragments for each side of comparison like this:
+     * index.php?option=com_mvd&view=fragment&format=raw&version1=1&version2=3&side=lhs
+     * To get XML version table:
+     * index.php?option=com_mvd&view=fragment&format=raw&list=y
      */
     function display()
     {
@@ -72,21 +75,28 @@ class MVDControllerFragment extends JController
 		$mvd = $this->ensureName();
 		$vt = $model->getVersionTable( $mvd );
 		$numVersions = $vt->getNumVersions();
-		$version1 = $_REQUEST['version1'];
-		if ( !$version1 )
-			$version1 = 1;
-		$version2 = $_REQUEST['version2'];
-		if ( !$version2 )
-			$version2 = ($numVersions>$version1)?$version1+1:$version1;
-		$side = $_REQUEST['side'];
-		if (!$side || $side == "lhs") {
-		    $compareType = "deleted";
+		$listVersions = $_REQUEST['list'];
+		if ($listVersions == 'y') {
+		    $view->setVersionTable($vt);
+		    $view->setListVersions(true);
 		} else {
-		    $compareType = "added";
+		    $view->setListVersions(false);
+    		$version1 = $_REQUEST['version1'];
+    		if ( !$version1 )
+    			$version1 = 1;
+    		$version2 = $_REQUEST['version2'];
+    		if ( !$version2 )
+    			$version2 = ($numVersions>$version1)?$version1+1:$version1;
+    		$side = $_REQUEST['side'];
+    		if (!$side || $side == "lhs") {
+    		    $compareType = "deleted";
+    		} else {
+    		    $compareType = "added";
+    		}
+    		$text1 = $model->compare($mvd,$version1,$version2,$compareType);
+    		$view->setVersionTable( $vt );
+    		$view->setText( $text1, $version1);
 		}
-		$text1 = $model->compare($mvd,$version1,$version2,$compareType);
-		$view->setVersionTable( $vt );
-		$view->setText( $text1, $version1);
 		parent::display();
 	}
 }

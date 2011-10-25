@@ -60,6 +60,12 @@ class MvdViewFragment extends JView
 		
 	}
 
+	function setListVersions($flag){
+	    $this->listVersions = $flag;
+	}
+	function writeVersions(){
+	    echo $this->vt->toXML();
+	}
 	function writeColumn($html )
 	{
 		echo $html;

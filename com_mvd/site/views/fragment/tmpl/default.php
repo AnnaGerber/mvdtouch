@@ -17,7 +17,12 @@
  */
 // No direct access
 defined('_JEXEC') or die('Restricted access'); 
-//$document =& JFactory::getDocument();
-//$document->setMimeEncoding( 'application/json' );
-$this->writeColumn($this->html1 );
+
+if (!$this->listVersions) {
+    $this->writeColumn($this->html1 );
+} else {
+    $document = JFactory::getDocument();
+    $document->setMimeEncoding( 'application/xml' );
+    $this->writeVersions();
+}
 ?>
