@@ -83,6 +83,7 @@ span.note-content {
 }
 .ui-layout-east {
     padding-left: 7px;
+    padding-bottom:5px;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
@@ -96,23 +97,19 @@ span.note-content {
 }
 .slider-label-sep {
     margin-right: 3px;
+    margin-left: 5px;
 }
-.version-label, .slider-label-sep {
-    width: 75px;
+.version-label, .edition-label, .slider-label-sep {
+    width: 97px;
     position: absolute;
     right: 2px;
     color: #555555;
+    line-height:1em;
 }
 .edition-label {
     font-style: normal;
     color: #212121;
     font-weight: bold;
-}
-#bottom-edition-label {
-    padding-top: 5px;
-}
-#top-edition-label {
-    padding-bottom: 5px;
 }
 
 #slider {
@@ -124,9 +121,10 @@ span.note-content {
     width: 3px;
     /* adjust margins so that slider bar overhangs ends a bit more, 
      * plus add extra length via padding to compensate for margins */
-    margin-top:-6px;
+    /*margin-top:-6px;
     margin-bottom:-6px;
-    padding-bottom:12px;
+    padding-bottom:12px;*/
+   
 }
 .ui-slider-vertical .ui-slider-handle {
     /* iOS-style handles for slider */

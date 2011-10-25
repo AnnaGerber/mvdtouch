@@ -1,3 +1,9 @@
+console = console || {
+    log: function(){
+       // makes sure console.log is defined to avoid errors in browsers that don't support it 
+    }
+};
+
 /** MVDTouch singleton */
 var MVDTouch = {
     /**
@@ -16,41 +22,75 @@ var MVDTouch = {
     syncScroll: false,
     BOTTOM: 0,
     TOP: 1,
-    getLabelCount: function(){
-        return this.data.versions.length * this.getEditionCount() - 1;
+    getVersionLabelCount: function(){
+        var numEditions = this.getEditionCount();
+        // all non-edition versions have two labels (one for each edition group)
+        // + each edition version has one label : these appear at the top and bottom of the slider
+        return this.data.versions.length * numEditions + numEditions - 1;
     },
     getEditionCount: function(){
         // Assume a single unnamed edition if no edition titles were specified in config
-        return Math.max(1,this.data.editions.length);
+        return Math.max(1, this.data.editions.length);
+    },
+    /** return the version corresponding the the value from the slider */
+    getVersion: function(index){
+        var totalNum = this.getVersionLabelCount(), 
+            numVersions = this.data.versions.length,
+            // slider min value is at bottom, but we want value relative from top, so adjust by subtraction
+            adjustedIndex = (totalNum - index);
+        // slider values are: topEditionVersion, (all other versions, listed once for each version), bottomEditionVersion
+        var version;
+        if (adjustedIndex == 0){
+            version = this.data.topEditionVersion;
+        } else if (adjustedIndex == totalNum) {
+            version = this.data.bottomEditionVersion;
+        } else {
+            version = this.data.versions[(adjustedIndex - 1) % numVersions];
+        }
+        return version;
     },
     positionSliderLabels: function(){
         var labelOffset = 5, // adjustment so that labels line up with handles
             sliderHeight = $('#slider').height(),
-            labelSpacing = sliderHeight / this.getLabelCount();
-        $('.version-label').css('top',
-            function(index){
-                return (Math.floor(labelSpacing * index) - labelOffset) + 'px';
-            }
-        );
-        $('.slider-label-sep').css('top',
-            function(index){
-                return (sliderHeight / MVDTouch.getEditionCount() * (index + 1)- labelOffset) + 'px';
-            }
-        );
+            numLabels = this.getVersionLabelCount()
+            labelSpacing = sliderHeight / numLabels,
+            numEditions = this.getEditionCount();
+        if (labelSpacing > 0){
+            $('.version-label').css('top',
+                function(index){
+                    var labelPosition = index;
+                    if (numEditions > 0) {
+                        labelPosition++;
+                    }
+                    return (Math.floor(labelSpacing * labelPosition) - labelOffset) + 'px';
+                }
+            );
+            $('.slider-label-sep').css('top',
+                function(index){
+                    return (sliderHeight / MVDTouch.getEditionCount() * (index + 1)- labelOffset) + 'px';
+                }
+            );
+            $('.edition-label').css('top',
+                function(index){
+                    return (index === 0 ? 
+                        -6 : (Math.floor(labelSpacing * numLabels ) - labelOffset - 6))+ 'px';
+                    
+                }
+            );
+        }
     },
     onSliderChange: function(event, ui) {
-        //console.log("onsliderchange",ui)
         function generateVersionPath(thisVersion, otherVersion, isTop) {
             var path;
             if (MVDTouch.mode === 'local'){
                 path = MVDTouch.localPath + MVDTouch.mvdName;
                 if (thisVersion.type === 'MVD'){
-                    path += (isTop ? '/lhs/' : '/rhs/') + thisVersion.shortName + 'vs';
-                    if (otherVersion.type === 'MVD' && thisVersion.shortName !== otherVersion.shortName){
-                        path += otherVersion.shortName + '.html';
+                    path += (isTop ? '/lhs/' : '/rhs/') + thisVersion.id + 'vs';
+                    if (otherVersion.type === 'MVD' && thisVersion.id !== otherVersion.id){
+                        path += otherVersion.id + '.html';
                     } else {
-                       //other version is same or image, use text path, we won't be comparing
-                        path += "/texts/" + thisVersion.shortName + '.html';
+                       //other version is same or image, we won't be comparing
+                        path += "/lhs/" + thisVersion.id + 'vs' + thisVersion.id + '.html';
                     }
                 } else {
                     // non-MVD resources e.g. images
@@ -63,15 +103,19 @@ var MVDTouch = {
                     '&version1=' + thisVersion.id + 
                     '&version2=' + otherVersion.id +
                     '&side=' + (isTop ? 'lhs' : 'rhs');
-                    console.log("remote path is " + path);
+                    //console.log("remote path is " + path);
             }
             return path;
         }
         var numVersions = this.data.versions.length,
-            totalNum = this.getLabelCount(),
+            totalNum = this.getVersionLabelCount(),
             bottomVal = ui.values[this.BOTTOM],
             topVal = ui.values[this.TOP];
-        
+        if (topVal < bottomVal){
+            var tmp = topVal;
+            topVal = bottomVal;
+            bottomVal = tmp;
+        }
         // If the user has moved both slider handles to the same value, show one pane
         // Checking for originalEvent ensures we only move handles after a mouse event
         if (topVal === bottomVal && event.originalEvent){
@@ -82,28 +126,26 @@ var MVDTouch = {
             $('div.ui-layout-center').layout().show('south');
         }
         
-        // slider min value is at bottom, but we want value relative from top, so adjust by subtraction
-        bottomVal = (totalNum - bottomVal);
-        topVal = (totalNum - topVal);
-        
         // look up version ids from config to construct paths to texts
-        var topVersion = this.data.versions[topVal % numVersions],
-            bottomVersion = this.data.versions[bottomVal % numVersions],
+        var topVersion = this.getVersion(topVal),
+            bottomVersion = this.getVersion(bottomVal),
             topPath = generateVersionPath(topVersion, bottomVersion, true),
-            bottomPath = generateVersionPath(topVersion, bottomVersion, false);
+            bottomPath = generateVersionPath(bottomVersion, topVersion, false);
 
         // load texts, the final arg indicates whether top or bottom view was changed
         this.loadVersions(topPath, bottomPath, $(ui.handle).index());
         // TODO: load explanatory notes for selected edition(s)
         var topEdition = this.data.editions[Math.floor(topVal / numVersions)];
         var bottomEdition = this.data.editions[Math.floor(bottomVal / numVersions)];
-        console.log("top is from " + 
+       
+        /*console.log("top is from " + 
             Math.floor(topVal / numVersions),
             topEdition, "bottom is from " + 
             Math.floor(bottomVal / numVersions),bottomEdition );
+        */
     },
     synchronizeTextScroll: function(viewThatChanged, viewToScroll) {
-        console.log("synchronize text scroll " + this.syncScroll);
+        //console.log("synchronize text scroll " + this.syncScroll);
         // check whether views should be synchronized (images not synchronized at present)
         if (this.syncScroll){
             // find the nearest span that has an id to the center of the scrolledView
@@ -118,12 +160,12 @@ var MVDTouch = {
                 }).filter(':first');    
             //console.log(" sync " + syncPoint + "height" + viewThatChanged.height() + " element pos " + syncSpan.position().top + " " + syncSpan.offset().top);
             var syncSpanId = syncSpan.attr('id');
-            console.log(syncSpan.text());
+            //console.log(syncSpan.text());
             if (syncSpanId){
               var toScrollSpanId = (syncSpanId.charAt(0) === 'a' ? 'd' + syncSpanId.substring(1) : 'a' + syncSpanId.substring(1));
               var toScroll = viewToScroll.find('#' + toScrollSpanId);
-              console.log(document.getElementById(toScrollSpanId));
-              console.log(syncPoint + " " + syncSpanId + " " + toScrollSpanId, toScroll);
+              //console.log(document.getElementById(toScrollSpanId));
+              //console.log(syncPoint + " " + syncSpanId + " " + toScrollSpanId, toScroll);
               
               if (toScroll.length >= 1 && toScroll.offset()){
                  this.syncScroll = false;
@@ -215,92 +257,106 @@ var MVDTouch = {
     },
     /** Create jQuery UI slider and version labels and load initial versions */
     init: function(){
-        var numLabels = this.getLabelCount(),
-            labelContainer = $('#version-labels'),
-            numEditions = this.data.editions.length;
-        for (var i = 0; i <= numLabels; i++){
-            $(document.createElement('div'))
-                .addClass('version-label')
-                .text(this.data.versions[i % this.data.versions.length].title)
-                .appendTo(labelContainer);
+        var labelContainer = $('#version-labels'),
+            numEditions = this.data.editions.length,
+            numLabels = this.getVersionLabelCount(),
+            // only count non-edition versions
+            numNonEditionLabels = this.data.versions.length * numEditions - 1;
+        if (numNonEditionLabels <= 0){
+            $('#top-view').html("No versions found");
+            return;
         }
         $('#slider').slider({
             orientation: 'vertical',
             max: numLabels,
-            values: [0, numLabels], 
+            values: [0, numLabels],
             step: 1,
             animate: true,
             change: $.proxy(this.onSliderChange, this)
         });
-        // Create edition label(s), and separators if this is a multi-edition demo
+        // create labels for edition versions
+        var topEdition = this.data.topEditionVersion,
+            bottomEdition = this.data.bottomEditionVersion;
+        if (topEdition){
+            $(document.createElement('div'))
+                    .addClass('edition-label')
+                    .text(topEdition.title)
+                    .appendTo(labelContainer);
+        }
+        if (bottomEdition){
+            $(document.createElement('div'))
+                    .addClass('edition-label')
+                    .text(bottomEdition.title)
+                    .appendTo(labelContainer);
+        }
+        // create labels for all non-edition versions
+        for (var i = 0; i <= numNonEditionLabels; i++){
+            var version = this.data.versions[i % this.data.versions.length];
+            $(document.createElement('div'))
+                .addClass('version-label')
+                .text(version.title)
+                .appendTo(labelContainer);
+        }
+
+        // Create edition  separators if this is a multi-edition demo
         // Separators are added between any number of editions, 
         // but editon labels only shown for first and last from config
-        if (numEditions > 0){
-            $('#top-edition-label').text(this.data.editions[0].title);
-        }
         if (numEditions > 1){
-            $('#bottom-edition-label').text(this.data.editions[numEditions - 1].title);
             for (var j = 1; j < numEditions; j++){
                 $(document.createElement('hr'))
                     .addClass('slider-label-sep')
                     .appendTo(labelContainer);
             }
         }
+        // layout for slider pane - this needs to happen after slider 
+        // and edition labels have been created so that height is correct
+        $('div.ui-layout-east').layout({
+            applyDefaultstyles: true,
+            center: {
+                paneSelector: '#slider-pane',
+                onresize: $.proxy(this.positionSliderLabels, this)
+            },
+            east: {
+                paneSelector: '#version-labels',
+                size: 95,
+                closable: false,
+                resizable: false
+            
+            },
+            // used to hold labels, now used for spacing
+            south : {
+                paneSelector: '#bottom-spacing',
+                resizable: false,
+                size: 5,
+                closable: false
+            },
+            north: {
+                paneSelector: '#top-spacing',
+                resizable: false,
+                size: 5,
+                closable: false
+            }
+        });
+        // Load initial texts
+        this.onSliderChange(null,{values:[0, numLabels]});
         this.positionSliderLabels();
-        // TODO:(use slider change handler to init)
-        this.loadVersions('data/tess/lhs/MSvs1912.html','data/tess/rhs/MSvs1912.html');
     },
     data: {
-        editions: [
-            {
-                title: 'Authorial Edition'
-            },{
-                title: 'Social-text Edition' 
-            }
-        ],
-        // default version data (for local mode) - will be overwritten on document load if mode is remote
+        // shortnames correspond to shortnames of editions from MVD
+        editions: ['Clarendon', 'Penguin'],
+        // add version data here if configuring local demo
+        topEditionVersion: {},
+        bottomEditionVersion: {},
         versions: [
-            {
-                title: 'Manuscript',
-                shortName: 'MS',
-                type: 'MVD'
-            }/*,{
-                title: 'Graphic', 
-                type: 'image',
-                id: 'G'
-            },{
-                title: 'Harper\'s Bazar', 
-                type: 'MVD',
-                id: 'HB'
-            }*/,{
-                title: '1891', 
-                type: 'MVD',
-                shortName: '1891'
-            },{
-                title: '1892', 
-                type: 'MVD',
-                shortName: '1892'
-            }/*,{
-                title: '1895',
-                type: 'MVD',
-                id: '1895'
-            },{
-                title: '1900', 
-                type: 'MVD',
-                id: '1900'
-            },{
-                title: '1902',
-                type: 'MVD',
-                id: '1902'
-            }*/,{
-                title: '1912',
-                type: 'MVD',
-                shortName: '1912'
-            }/*,{
-                title: '1920',
-                type: 'MVD',
-                id: '1920'
-            }*/
+            // all other versions
+            /*
+                 {
+                        title: 'Manuscript',
+                        shortName: 'MS',
+                        type: 'MVD',
+                        id: 1
+                 }
+             */
         ]       
     }
 }
@@ -310,13 +366,13 @@ $(document).ready(function(){
     $('body').layout({
         east: {
             spacing_open: 2,
-            size: '100',
+            size: 120,
             closable: false,
             resizable: false
         },
         north: {
             spacing_open: 0,
-            size: '20',
+            size: 20,
             closable: false,
             resizable: false
         }
@@ -331,30 +387,6 @@ $(document).ready(function(){
             paneSelector: '#bottom-view',
             closable: false,
             size: '.5' 
-        }
-    });
-   $('div.ui-layout-east').layout({
-        applyDefaultstyles: true,
-        center: {
-            paneSelector: '#slider-pane',
-            onresize: $.proxy(MVDTouch.positionSliderLabels, MVDTouch)
-        },
-        east: {
-            paneSelector: '#version-labels',
-            size: 75,
-            closable: false,
-            resizable: false
-        
-        },
-        south : {
-            paneSelector: '#bottom-edition-label',
-            resizable: false,
-            closable: false
-        },
-        north: {
-            paneSelector: '#top-edition-label',
-            resizable: false,
-            closable: false
         }
     });
     // synchronize scrolling between text views
@@ -383,22 +415,29 @@ $(document).ready(function(){
             dataType: 'xml',
             success: function(data){
                 // load version data from xml values
+                // we store 'edition' versions separately from the others
                 MVDTouch.data.versions = [];
                 $(data).find('version').each(function(i,el){
-                    MVDTouch.data.versions[i] = {
-                        id: i,
-                        shortName: $(el).attr('shortname'),
+                    var shortName = $(el).attr('shortname');
+                    var versionData = {
+                        id: i+1,
+                        shortName: shortName,
                         title: $(el).attr('longname'),
                         type: 'MVD'
+                    };
+                    if (MVDTouch.data.editions.length > 0 && shortName === MVDTouch.data.editions[0]){
+                        MVDTouch.data.topEditionVersion = versionData;
+                    } else if (MVDTouch.data.editions.length > 1 && shortName === MVDTouch.data.editions[1]){
+                        MVDTouch.data.bottomEditionVersion = versionData;
+                    } else {
+                        MVDTouch.data.versions.push(versionData);
                     }
                 });
                 $.proxy(MVDTouch.init(), MVDTouch);
             }, 
             error: function(jqXHR, textStatus, errorThrown){
                 console.log("Loading version data failed " + textStatus + " " + errorThrown, jqXHR);
-                // fallback to local data
-                MVDTouch.mode = 'local';
-                $.proxy(MVDTouch.init(), MVDTouch);
+                $('#top-view').html("Unable to load MVD (" + textStatus + "): " +  errorThrown);
             }
         });
     } else {
