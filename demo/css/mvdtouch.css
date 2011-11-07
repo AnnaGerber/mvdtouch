@@ -1,6 +1,7 @@
 body {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Helvetica, sans-serif;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Helvetica, sans-serif;height:100%;
 }
+html {height:100%}
 strong, em, b, i, h1, h2, h3, h4 {
     /* Lucida sans looks better for bolded text than "Lucida sans unicode" */
     font-family: "Lucida Sans", "Lucida Sans Unicode", "Lucida Grande", Helvetica, sans-serif;
@@ -14,7 +15,18 @@ p {
     margin-top:0.2em;
     margin-bottom:0.2em;
 }
-br.lb {height:0px}
+.lb {height:0px}
+.pb {
+    margin-left:40px;
+    margin-right:40px;
+    display:block; 
+    height:2px;  
+    border-top:1px solid #f8f8f8;
+}
+p .pb {
+   margin:0;
+   margin-top:4px;
+}
 /* styles for texts from MVD-GUI */
 div.poem { margin-left: 1cm; font-size: 14px }
 div#scrolling { width : 400px; height : 200px; overflow : auto; }
@@ -34,12 +46,10 @@ span.header { color: cornsilk }
 span.head { font-size: medium }
 span.invisible { color: transparent }
 span.information { color: dimgrey; font-size: 12px; padding-left: 4px }
-span.deleted {padding:none; color:red }
-span.transposed { color: grey }
-span.added { color: blue }
 span.overstrike{text-decoration:line-through}
-span.founddeleted { color: green;}
-span.foundadded { color: green;}
+span.founddeleted { padding-left:2px;padding-right:2px;text-decoration:line-through}
+span.foundadded:before {content: "["}
+span.foundadded:after {content: "]"}
 span.groupHeader {font-size: 14px; font-weight: bold }
 span.groupName {font-size: 14px; }
 span.half { color: orange }
@@ -51,26 +61,14 @@ span.stageitalic {font-size: 12px; font-style: italic }
 span.sp {font-size: 12pt}
 
 /* MVDTouch layout and styles */
-span.note span {
-    color:white
+span.note span, .ui-tooltip-content span.note-content span {
+    color:white;
 }
-span.note {
-    width:1px;
-    height:1px;
-    z-index: 10000;
-    color: white;
-}
-span.note-content {
-     background-color:#212121;
-     border-bottom-left-radius: 3px 3px;
-     border-bottom-right-radius: 3px 3px;
-     border-top-left-radius: 3px 3px;
-     border-top-right-radius: 3px 3px;
-     color: white;
-     text-align: center;
+.ui-tooltip-tipsy {
+    max-width:350px;
 }
 .ui-layout-north {
-	border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
 }
 #header-left {
     float: left;
@@ -79,10 +77,10 @@ span.note-content {
 #header-right {
     float: right;
     position: relative;
-    right: 110px;
+    right: 130px;
 }
 .ui-layout-east {
-    padding-left: 7px;
+    padding-left: 12px;
     padding-bottom:5px;
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -100,46 +98,58 @@ span.note-content {
     margin-left: 5px;
 }
 .version-label, .edition-label, .slider-label-sep {
-    width: 97px;
+    width: 85px;
     position: absolute;
+    z-index: 5;
     right: 2px;
     color: #555555;
     line-height:1em;
+
 }
 .edition-label {
     font-style: normal;
     color: #212121;
     font-weight: bold;
 }
-
+#slider-pane {
+   margin-top: 15px !important;
+}
+#version-labels {
+    position:relative;
+    margin-top:30px !important;
+}
 #slider {
     /* Draw a thin bar with rounded ends for slider */
-    height: 100%;
     border-radius: 3px;
+    background-image:none;
     background-color: #CCCCCC;
     border: 1px solid #AAAAAA;
     width: 3px;
     /* adjust margins so that slider bar overhangs ends a bit more, 
      * plus add extra length via padding to compensate for margins */
-    /*margin-top:-6px;
+    margin-top:-6px;
     margin-bottom:-6px;
-    padding-bottom:12px;*/
+    padding-bottom:12px;
    
 }
+
 .ui-slider-vertical .ui-slider-handle {
-    /* iOS-style handles for slider */
+    /* handles for slider */
     outline: none;
     position: absolute; 
-    z-index: 2;
+    z-index: 4;
     cursor: pointer;
     margin-left: 0; 
     margin-bottom: -14px;
     width: 24px;
     height: 24px;
     left: -9px;
+    background-color: transparent;
+    border:none;
     background-position: 0 -23px;
     background-image: url(../images/slider_handles.png);
 }
+
 .ui-slider-vertical .ui-slider-handle:hover {
     background-position: 0 0;
 }
@@ -149,4 +159,40 @@ span.note-content {
     color:#555555;
     position:absolute;
     left: 3px;
+}
+.narrative a:link, .narrative a:visited {
+    color: yellow;
+}
+#top-view, #bottom-view {
+    position:relative;
+}
+
+.view-toggle-button {
+    position:absolute;
+    width:32px;
+    height:32px;
+    right:17px;
+    float:right;
+    opacity:0.7;
+    bottom:3px;
+    z-index:5;
+    background-image: url(../images/linedpaper32.png);
+}
+.image-toggle-button {
+    background-image: url(../images/camera32.png);
+}
+.top-toggle-button {
+    bottom: 50%;
+    margin-bottom: 6px;
+}
+.single-toggle-button {
+   bottom:0px;
+}
+.facs {
+    max-width:100%;
+}
+#bottomToggleButton {position:absolute;float:right;right:18;opacity:0.7;bottom:0;z-index:5}
+#topToggleButton {position:absolute;float:right;right:17;opacity:0.7;bottom:440;z-index:5}
+.ui-dialog-content {
+   max-height: 400px;
 }

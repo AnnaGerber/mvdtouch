@@ -1,0 +1,5 @@
+span.founddeleted {color:red}
+span.foundadded { color: blue;}
+span.deleted { color:red }
+span.transposed { color: grey }
+span.added { color: blue }

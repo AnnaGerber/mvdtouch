@@ -1,31 +1,51 @@
 <html>
     <head>
-        <title>MVDTouch Demo</title>
+        <title>MVD Touch</title>
+        <link rel="stylesheet" type="text/css" href="css/jquery.qtip.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/jquery.ui.css"/>
         <link rel="stylesheet" type="text/css" href="css/mvdtouch.css" />
-        <script type="text/javascript" src="js/lib/jquery.min.js"></script>
-        <script type="text/javascript" src="js/lib/jquery.layout-latest.js"></script>
-        <script type="text/javascript" src="js/lib/jquery-ui-slider.min.js"></script>
-        <script type="text/javascript" src="js/lib/jquery.scrollevents.js"></script>
-        <script type="text/javascript" src="js/mvdtouch.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="js/lib/jquery.layout-latest.js">
+        </script>
+        <script type="text/javascript" src="js/lib/jquery-ui-1.8.16.custom.min.js">
+        </script>
+        <script type="text/javascript" src="js/lib/jquery.scrollevents.js">
+        </script>
+        <script type="text/javascript" src="js/lib/jquery.qtip.min.js">
+        </script>
+        <script type="text/javascript" src="js/mvdtouch.js">
+        </script>
+        <script type="text/javascript" src="js/lib/jquery.ui.touch.alt.js">
+        </script>
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=0;" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <link rel="apple-touch-icon-precomposed" href="images/mvdtouch.png"/>
     </head>
     <body>
-        <div class="ui-layout-north">
-            <div id="header-left"></div>
-            <div id="header-right"></div>
+    <div class="ui-layout-north">
+        <div id="header-left">
         </div>
-        <div class="ui-layout-center">
-            <div id="top-view">
-            </div>
-            <div id="bottom-view">
+        <div id="header-right">
+        </div>
+    </div>
+    <div class="ui-layout-center">
+        <div id="top-view">
+        </div>
+        <div id="bottom-view">
+        </div>
+    </div>
+    <div class="ui-layout-east">
+        <div id="slider-pane">
+            <div id="slider">
             </div>
         </div>
-        <div class="ui-layout-east">
-            <div id="top-spacing"></div>
-            <div id="slider-pane">
-                <div id="slider"></div>
-            </div>
-            <div id="bottom-spacing"></div>
-            <div id="version-labels"></div>
-        </div>
-    </body>
+    </div>
+    <div id="version-labels">
+    </div>
+    </div>
+    <div id="narrative-notes" style="display:none">
+    </div>
+</body>
 </html>
