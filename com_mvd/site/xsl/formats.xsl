@@ -22,10 +22,12 @@ along with MVD_GUI. If not, see <http://www.gnu.org/licenses/>.
 <xsl:key name="respKey" match="//respStmt" use="@xml:id"/>
 <xsl:template match="/">
 <html><body>
+<div class="transcript">
 <xsl:apply-templates/>
-<!--div id="secret" style="display:none">
-	<xsl:copy-of select="."/>
-</div-->
+</div>
+<div style="display:none" class="facsimile">
+<xsl:apply-templates select="//pb[@facs]" mode="facs"/>
+</div>
 </body></html>
 </xsl:template>
 
@@ -56,7 +58,16 @@ along with MVD_GUI. If not, see <http://www.gnu.org/licenses/>.
 </xsl:template>
 
 <xsl:template match="pb">
-<br class="pb"/><xsl:apply-templates/>
+<span class="pb">
+    <xsl:if test="@n">
+        <xsl:attribute name="data-n"><xsl:value-of select="@n"/></xsl:attribute>
+    </xsl:if>
+</span>
+<xsl:apply-templates/>
+</xsl:template>
+
+<xsl:template match="pb" mode="facs">
+    <img data-src="{@facs}"/>
 </xsl:template>
 
 <xsl:template match="//handNote">
@@ -263,19 +274,42 @@ along with MVD_GUI. If not, see <http://www.gnu.org/licenses/>.
 </xsl:template>
 
 <xsl:template match="p">
-    <p id="{generate-id()}">
+    <p>
+	    <xsl:attribute name="id">
+		    <xsl:choose>
+		        <xsl:when test="@id">
+		            <xsl:value-of select="@id"/>
+		        </xsl:when>
+		        <xsl:otherwise>
+		            <xsl:value-of select="generate-id()"/>
+		        </xsl:otherwise>
+		    </xsl:choose>
+	    </xsl:attribute>
+	    <xsl:if test="contains(@rend,'text-indent')">
+	       <xsl:attribute name="style">
+	           <xsl:value-of select="@rend"/>
+	       </xsl:attribute>
+	    </xsl:if>
         <xsl:apply-templates/>
     </p>
 </xsl:template>
 
 <xsl:template match="note">
     <span>
-	<xsl:attribute name="class">
-	<xsl:text>note</xsl:text>
-	<xsl:if test="@type">
-          <xsl:text> </xsl:text><xsl:value-of select="@type"/>
-	</xsl:if>
-	</xsl:attribute>
+		<xsl:attribute name="class">
+		<xsl:text>note</xsl:text>
+		<xsl:if test="@type">
+	          <xsl:text> </xsl:text><xsl:value-of select="@type"/>
+		</xsl:if>
+		</xsl:attribute>
+		<xsl:if test="contains(@target,'#match(xpath1(id')">
+		  <xsl:attribute name="data-target">
+		      <xsl:value-of select='translate(substring-before(substring-after(@target,"id("),")"),&quot;&apos;&quot;,"")'/>
+		  </xsl:attribute>
+		  <xsl:attribute name="data-match">
+		      <xsl:value-of select='translate(substring-before(substring-after(@target,"),"),")"),&quot;&apos;&quot;,"")'/>
+		  </xsl:attribute>
+		</xsl:if>
         <span class="note-content">
 	<xsl:apply-templates/>
         </span>
